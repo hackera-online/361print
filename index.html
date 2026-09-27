@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PROJECT 361 — Печатни решения и реклама</title>
+<meta name="description" content="Продажба, наем и сервиз на копирна техника. Печатна и сувенирна реклама, произведена на място.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14181c;
+    --ink-soft:#2b3138;
+    --paper:#efeae0;
+    --paper-2:#e6e0d2;
+    --slate:#565f68;
+    --line: rgba(20,24,28,.16);
+    --cyan:#00a8e8;
+    --magenta:#e0007a;
+    --yellow:#f2b705;
+    --radius: 2px;
+    --display: "Big Shoulders Display", sans-serif;
+    --text: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top: 90px;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--text);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+
+  img,svg{max-width:100%;display:block;}
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(20px,4vw,48px);
+  }
+
+  /* ---------- registration-mark motif (drawn, no external images) ---------- */
+  .regmark{
+    display:inline-block;
+    width:1em;height:1em;
+    position:relative;
+  }
+  .regmark svg{width:100%;height:100%;display:block;}
+
+  .halftone-bg{
+    background-image: radial-gradient(var(--ink) 0.6px, transparent 0.6px);
+    background-size: 9px 9px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(239,234,224,.86);
+    backdrop-filter:saturate(140%) blur(10px);
+    border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top,0px);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    height:74px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--display);
+    font-weight:900;
+    font-size:22px;
+    letter-spacing:.01em;
+    text-decoration:none;
+  }
+  .brand .mark{width:26px;height:26px;flex:none;}
+  .nav-links{
+    display:flex; align-items:center; gap:clamp(14px,2.4vw,32px);
+    list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    font-size:15px;
+    color:var(--ink-soft);
+    position:relative;
+    padding:6px 0;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height:2px; background:var(--magenta);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after{transform:scaleX(1);}
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--paper);
+    padding:10px 18px;
+    font-size:14px; font-weight:600;
+    text-decoration:none;
+    border:1px solid var(--ink);
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--magenta); border-color:var(--magenta);}
+  .nav-toggle{display:none;}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .nav-toggle{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:40px;height:40px; border:1px solid var(--line); background:none;
+    }
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--magenta); outline-offset:3px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:clamp(120px,18vw,168px) 0 clamp(56px,7vw,88px);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:clamp(24px,5vw,60px);
+    align-items:center;
+  }
+  .eyebrow-line{
+    display:flex; align-items:center; gap:10px;
+    color:var(--slate); font-size:14px; margin-bottom:18px;
+  }
+  .eyebrow-line .dot{width:8px;height:8px;background:var(--cyan);border-radius:50%;flex:none;}
+  h1.hero-title{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(40px, 7.2vw, 84px);
+    line-height:.98;
+    letter-spacing:-.01em;
+    margin:0 0 22px;
+  }
+  h1.hero-title .accent{color:var(--magenta);}
+  .hero-sub{
+    max-width:52ch;
+    font-size:clamp(16px,1.6vw,19px);
+    color:var(--ink-soft);
+    margin:0 0 32px;
+  }
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 26px;
+    font-size:15px; font-weight:600;
+    text-decoration:none;
+    border:1px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, transform .15s ease;
+  }
+  .btn-solid{background:var(--ink); color:var(--paper);}
+  .btn-solid:hover{background:var(--magenta); border-color:var(--magenta); color:#fff;}
+  .btn-ghost:hover{background:var(--ink); color:var(--paper);}
+  .btn:active{transform:translateY(1px);}
+
+  .hero-visual{
+    position:relative;
+    aspect-ratio:1/1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .press-plate{
+    position:relative;
+    width:min(72vw,420px); height:min(72vw,420px);
+    border:1px solid var(--line);
+    background: var(--paper-2);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .press-plate::before{
+    content:"";
+    position:absolute; inset:14px;
+    background-image: radial-gradient(var(--ink) 0.7px, transparent 0.7px);
+    background-size: 10px 10px;
+    opacity:.35;
+  }
+  .press-rings{
+    position:relative; width:56%; height:56%;
+    animation: spin 38s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .press-rings{animation:none;} }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .press-rings svg{width:100%;height:100%;overflow:visible;}
+  .plate-tag{
+    position:absolute; bottom:18px; left:18px; right:18px;
+    display:flex; justify-content:space-between;
+    font-size:11px; letter-spacing:.04em; color:var(--slate);
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-section{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--ink);
+    color:var(--paper);
+    overflow:hidden;
+    padding:16px 0;
+  }
+  .marquee-track{
+    display:flex; width:max-content;
+    animation: scroll-x 32s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{animation:none;} }
+  @keyframes scroll-x{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .marquee-item{
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(20px,3vw,30px);
+    padding:0 22px;
+    white-space:nowrap;
+  }
+  .marquee-item .regmark{color:var(--magenta);}
+
+  /* ---------- DEMO / CHAT ---------- */
+  .demo-section{padding:clamp(64px,9vw,110px) 0;}
+  .section-head{
+    display:grid; grid-template-columns: 1fr 1fr; gap:24px;
+    align-items:end;
+    margin-bottom:clamp(28px,4vw,44px);
+  }
+  .section-kicker{
+    font-size:13px; color:var(--slate); margin:0 0 8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-kicker .regmark{color:var(--cyan);}
+  h2.section-title{
+    font-family:var(--display); font-weight:900;
+    font-size:clamp(30px,4.4vw,52px);
+    line-height:1.02; margin:0;
+  }
+  .section-note{color:var(--slate); font-size:15px; max-width:40ch; margin:0;}
+
+  .chat-window{
+    border:1px solid var(--ink);
+    background:#fff;
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    min-height:420px;
+  }
+  .chat-side{
+    background:var(--ink); color:var(--paper);
+    padding:22px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .chat-side .who{font-family:var(--display); font-weight:700; font-size:19px;}
+  .chat-side .status{
+    display:flex; align-items:center; gap:8px; font-size:13px; color:#c9c2b2;
+  }
+  .chat-side .status .led{
+    width:8px;height:8px;border-radius:50%; background:#38c172;
+    box-shadow:0 0 0 3px rgba(56,193,114,.25);
+  }
+  .chat-side .chip-list{display:flex; flex-direction:column; gap:8px; margin-top:auto;}
+  .chat-side .chip{
+    border:1px solid rgba(239,234,224,.28);
+    padding:8px 10px; font-size:12.5px; color:#e7e2d5;
+  }
+  .chat-body{
+    padding:24px;
+    display:flex; flex-direction:column; gap:16px;
+    overflow:auto;
+  }
+  .msg{max-width:78%; padding:12px 16px; font-size:15px; line-height:1.5;}
+  .msg.user{
+    align-self:flex-end;
+    background:var(--ink);
+    color:var(--paper);
+    border-radius: var(--radius);
+  }
+  .msg.bot{
+    align-self:flex-start;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    color:var(--ink);
+  }
+  .msg .label{display:block; font-size:11px; color:var(--slate); margin-bottom:5px;}
+  .msg.user .label{color:#c9c2b2;}
+  .chat-input-row{
+    border-top:1px solid var(--line);
+    padding-top:16px; margin-top:4px;
+    display:flex; gap:10px; align-items:center;
+  }
+  .chat-input-row .fake-input{
+    flex:1; border:1px solid var(--line); padding:12px 14px; color:var(--slate); font-size:14px;
+  }
+  .chat-input-row .send{
+    background:var(--magenta); color:#fff; border:none;
+    padding:12px 18px; font-weight:600; font-size:14px; cursor:default;
+  }
+
+  @media (max-width:760px){
+    .chat-window{grid-template-columns:1fr;}
+    .chat-side{flex-direction:row; flex-wrap:wrap; align-items:center;}
+    .chat-side .chip-list{display:none;}
+    .section-head{grid-template-columns:1fr;}
+  }
+
+  /* ---------- STATEMENT ---------- */
+  .statement{
+    background:var(--ink); color:var(--paper);
+    padding:clamp(72px,12vw,140px) 0;
+    position:relative;
+  }
+  .statement .wrap{position:relative;}
+  .statement blockquote{
+    margin:0; font-family:var(--display); font-weight:700;
+    font-size:clamp(28px,5.4vw,58px);
+    line-height:1.08; letter-spacing:-.005em;
+    max-width:18ch;
+  }
+  .statement blockquote em{
+    font-style:normal; color:var(--yellow);
+  }
+  .statement cite{
+    display:block; margin-top:26px; font-style:normal;
+    color:#c9c2b2; font-size:14px;
+  }
+
+  /* ---------- BENTO FEATURES ---------- */
+  .features{padding:clamp(64px,9vw,110px) 0;}
+  .bento{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .bento > .cell{
+    background:var(--paper);
+    padding:26px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .cell h3{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(19px,2.1vw,24px); margin:0;
+  }
+  .cell p{margin:0; color:var(--slate); font-size:14.5px;}
+  .cell ul{margin:4px 0 0; padding-left:18px; color:var(--slate); font-size:14px;}
+  .cell ul li{margin-bottom:4px;}
+  .cell .tag{
+    align-self:flex-start;
+    font-size:11.5px; color:var(--slate);
+    border:1px solid var(--line); padding:3px 8px;
+  }
+  .cell.big{grid-column:span 3;}
+  .cell.small{grid-column:span 2;}
+  .cell.accent{background:var(--ink); color:var(--paper);}
+  .cell.accent p, .cell.accent ul{color:#c9c2b2;}
+  .cell.accent .tag{border-color:rgba(239,234,224,.3); color:#c9c2b2;}
+
+  @media (max-width:900px){
+    .bento{grid-template-columns:repeat(2,1fr);}
+    .cell.big, .cell.small{grid-column:span 2;}
+  }
+  @media (max-width:520px){
+    .bento{grid-template-columns:1fr;}
+    .cell.big, .cell.small{grid-column:span 1;}
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{padding:clamp(64px,9vw,110px) 0; border-top:1px solid var(--line);}
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    margin-top:36px;
+    border-top:1px solid var(--line);
+  }
+  .step{
+    padding:26px 22px 0 0;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .step:last-child{border-right:none;}
+  .step .num{
+    font-family:var(--display); font-weight:900;
+    font-size:15px; color:var(--magenta);
+    display:block; margin-bottom:10px;
+  }
+  .step h4{margin:0 0 8px; font-family:var(--display); font-weight:700; font-size:19px;}
+  .step p{margin:0; color:var(--slate); font-size:14.5px;}
+
+  @media (max-width:820px){
+    .steps{grid-template-columns:1fr 1fr;}
+    .step{border-right:none; border-bottom:1px solid var(--line); padding-bottom:24px; margin-bottom:24px;}
+  }
+  @media (max-width:520px){
+    .steps{grid-template-columns:1fr;}
+  }
+
+  /* ---------- CTA FOOTER ---------- */
+  footer.site-footer{
+    background:var(--ink); color:var(--paper);
+  }
+  .cta-band{
+    padding:clamp(56px,8vw,96px) 0;
+    border-bottom:1px solid rgba(239,234,224,.16);
+    display:grid; grid-template-columns:1.4fr 1fr; gap:28px; align-items:center;
+  }
+  .cta-band h2{
+    font-family:var(--display); font-weight:900;
+    font-size:clamp(30px,4.6vw,54px); margin:0 0 6px; line-height:1.02;
+  }
+  .cta-band p{margin:0; color:#c9c2b2; max-width:46ch;}
+  .cta-band .btn-solid{background:var(--paper); color:var(--ink); border-color:var(--paper);}
+  .cta-band .btn-solid:hover{background:var(--magenta); color:#fff; border-color:var(--magenta);}
+  .cta-actions{display:flex; flex-wrap:wrap; gap:14px; justify-content:flex-start;}
+
+  @media (max-width:760px){
+    .cta-band{grid-template-columns:1fr;}
+  }
+
+  .foot-grid{
+    padding:clamp(40px,6vw,64px) 0 28px;
+    display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:32px;
+  }
+  .foot-brand .brand{color:var(--paper);}
+  .foot-brand p{color:#a8a196; font-size:14px; max-width:34ch; margin-top:14px;}
+  .foot-col h5{
+    font-size:12.5px; letter-spacing:.04em; color:#8d8577; margin:0 0 14px; font-weight:600;
+  }
+  .foot-col ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .foot-col a{color:#d9d3c4; text-decoration:none; font-size:14.5px;}
+  .foot-col a:hover{color:var(--paper); text-decoration:underline;}
+  .foot-bottom{
+    border-top:1px solid rgba(239,234,224,.16);
+    padding:18px 0 calc(18px + env(safe-area-inset-bottom,0px));
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:13px; color:#8d8577;
+  }
+  @media (max-width:760px){
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:480px){
+    .foot-grid{grid-template-columns:1fr;}
+  }
+
+  /* utility: skip long scroll on x-overflow content just in case */
+  .overflow-guard{max-width:100%; overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="mark regmark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="7" fill="none" stroke="#00a8e8" stroke-width="1.4"/><circle cx="14" cy="13" r="7" fill="none" stroke="#e0007a" stroke-width="1.4"/><line x1="11.5" y1="2" x2="11.5" y2="20" stroke="#14181c" stroke-width="1"/><line x1="3" y1="11.5" x2="21" y2="11.5" stroke="#14181c" stroke-width="1"/></svg>
+      </span>
+      PROJECT 361
+    </a>
+    <nav aria-label="Основна навигация">
+      <ul class="nav-links">
+        <li><a href="#hero">Начало</a></li>
+        <li><a href="#features">Печатни решения</a></li>
+        <li><a href="#features">Реклама</a></li>
+        <li><a href="#how">Сервиз</a></li>
+        <li><a href="#footer">Контакти</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="#footer">Поръчай тонер</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow-line"><span class="dot" aria-hidden="true"></span>Печат, техника и реклама на едно място</p>
+        <h1 class="hero-title">Не питай кой е <span class="accent">най-евтин</span>.<br>Питай кой върши <span class="accent">работа</span>.</h1>
+        <p class="hero-sub">Продаваме, отдаваме под наем и сервизираме копирна техника — и произвеждаме печатната и сувенирна реклама, която стои зад твоето събитие. Едно обаждане, едно решение.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#demo">Заяви консултация</a>
+          <a class="btn btn-ghost" href="#features">Виж услугите</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="press-plate">
+          <div class="press-rings">
+            <svg viewBox="0 0 200 200">
+              <circle cx="80" cy="80" r="52" fill="none" stroke="#00a8e8" stroke-width="2" opacity=".8"/>
+              <circle cx="118" cy="112" r="52" fill="none" stroke="#e0007a" stroke-width="2" opacity=".8"/>
+              <circle cx="99" cy="96" r="52" fill="none" stroke="#f2b705" stroke-width="2" opacity=".8"/>
+              <line x1="99" y1="24" x2="99" y2="168" stroke="#14181c" stroke-width="1"/>
+              <line x1="27" y1="96" x2="171" y2="96" stroke="#14181c" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="plate-tag"><span>PRO361 / PLATE</span><span>CMYK · REG</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <!-- duplicated once for seamless loop -->
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Принтери</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Тонер касети</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Многофункционални устройства</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Флаери и брошури</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Тениски</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Чаши и керамика</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>3D реклама</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Бродерия</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Сервиз на място</div>
+      <!-- duplicate set for the -50% loop -->
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Принтери</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Тонер касети</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Многофункционални устройства</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Флаери и брошури</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Тениски</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Чаши и керамика</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>3D реклама</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Бродерия</div>
+      <div class="marquee-item"><span class="regmark"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Сервиз на място</div>
+    </div>
+  </div>
+
+  <!-- DEMO / CHAT -->
+  <section class="demo-section" id="demo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker"><span class="regmark"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Консултант по печат</p>
+          <h2 class="section-title">Пита се лесно.<br>Отговаря се с модел и срок.</h2>
+        </div>
+        <p class="section-note">Пример за реален разговор с нашия онлайн консултант — препоръка на устройство, срок за сервиз и поръчка на тонер, без да чакате обаждане.</p>
+      </div>
+
+      <div class="chat-window overflow-guard">
+        <div class="chat-side">
+          <div class="who">PRO361 Консултант</div>
+          <div class="status"><span class="led" aria-hidden="true"></span>Онлайн сега</div>
+          <div class="chip-list" aria-hidden="true">
+            <span class="chip">Продажба на техника</span>
+            <span class="chip">Наем на принтери</span>
+            <span class="chip">Сервиз и следгаранция</span>
+            <span class="chip">Поръчка на тонер</span>
+          </div>
+        </div>
+        <div class="chat-body">
+          <div class="msg user"><span class="label">Вие</span>Здравейте, търся принтер за малък офис — до 10 души. Какво бихте препоръчали?</div>
+          <div class="msg bot"><span class="label">PRO361</span>За офис с до 10 души Epson EcoTank L1110 е добър старт — резервоари с мастило вместо касети, ниска цена на страница. Ако ви трябва и копиране и сканиране, PANTUM M6500 е многофункционално решение с по-висок капацитет.</div>
+          <div class="msg user"><span class="label">Вие</span>А ако се развали — колко бързо реагирате?</div>
+          <div class="msg bot"><span class="label">PRO361</span>Правим сервизна и следгаранционна поддръжка, стандартно посещение на място в рамките на работния ден. За по-прости случаи предлагаме и дистанционна помощ, без да чакате техник.</div>
+          <div class="msg user"><span class="label">Вие</span>Добре. А тонер касетите за него мога ли да поръчам направо оттук?</div>
+          <div class="msg bot"><span class="label">PRO361</span>Да — през „Поръчай тонер“ ни пращате модела на устройството и количеството, потвърждаваме наличност същия ден и организираме доставка.</div>
+
+          <div class="chat-input-row" aria-hidden="true">
+            <div class="fake-input">Опишете нуждата си — брой служители, обем печат, повод за реклама…</div>
+            <button class="send" type="button" tabindex="-1">Изпрати</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="statement">
+    <div class="wrap">
+      <blockquote>
+        Не мисли кой е <em>най-евтиният</em> начин да го направиш, или кой е <em>най-бързият</em>. Мисли кой е <em>най-добрият</em> начин да го направиш.
+        <cite>— философията, по която работим от 2018 г.</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- BENTO FEATURES -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker"><span class="regmark"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Какво правим</p>
+          <h2 class="section-title">Две страни на едно и също нещо: техника и печат</h2>
+        </div>
+        <p class="section-note">Печатни решения — за офиса, който трябва да работи всеки ден. Реклама — за събитието, което трябва да изглежда добре веднъж.</p>
+      </div>
+
+      <div class="bento">
+        <div class="cell big accent">
+          <span class="tag">Печатни решения</span>
+          <h3>Техника, която не ви обира времето</h3>
+          <p>Нова и рециклирана копирна техника, подбрана според реалния обем печат в офиса.</p>
+          <ul>
+            <li>Продажба на печатаща техника</li>
+            <li>Печатаща техника под наем</li>
+            <li>Специализирана печатаща техника</li>
+            <li>Оптимизация на печатния поток</li>
+          </ul>
+        </div>
+        <div class="cell big">
+          <span class="tag">Реклама</span>
+          <h3>Материали за събитието, което не се повтаря</h3>
+          <p>От флаер за витрината до обемна фигура пред щанда — произведени по ваш повод.</p>
+          <ul>
+            <li>Печатна и сувенирна реклама</li>
+            <li>3D и обемна реклама</li>
+            <li>Флаери, каталози и брошури</li>
+            <li>Графичен дизайн</li>
+          </ul>
+        </div>
+        <div class="cell small">
+          <h3>Сервизна поддръжка</h3>
+          <p>Следгаранционна поддръжка и посещение на място, когато машината спре да работи.</p>
+        </div>
+        <div class="cell small">
+          <h3>Дистанционна помощ</h3>
+          <p>Настройка на драйвери, мрежов печат и дребни проблеми — решени без чакане на техник.</p>
+        </div>
+        <div class="cell small">
+          <h3>Консумативи</h3>
+          <p>Оригинални и съвместими тонер касети за всички устройства, които поддържаме.</p>
+        </div>
+        <div class="cell small">
+          <h3>Тениски и бродерия</h3>
+          <p>Печат на тениски, керамика и чаши, плюс бродерия за екипно облекло.</p>
+        </div>
+        <div class="cell small">
+          <h3>Календари и тефтери</h3>
+          <p>Корпоративни календари и тефтери — печатани навреме за края на годината.</p>
+        </div>
+        <div class="cell small">
+          <h3>Устройства под наем</h3>
+          <p>Копирна техника под наем за офиси и администрация — без дългосрочен ангажимент.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0;">
+        <div>
+          <p class="section-kicker"><span class="regmark"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>Процес</p>
+          <h2 class="section-title">Как минава едно запитване при нас</h2>
+        </div>
+        <p class="section-note">Едни и същи четири стъпки — независимо дали купувате принтер или печатате материали за изложение.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="num">01</span>
+          <h4>Запитване</h4>
+          <p>Казвате ни обема на печат в офиса или повода за рекламата — по телефон, имейл или през чата.</p>
+        </div>
+        <div class="step">
+          <span class="num">02</span>
+          <h4>Оферта</h4>
+          <p>Предлагаме конкретни модели или тираж, с реални срокове за доставка и производство.</p>
+        </div>
+        <div class="step">
+          <span class="num">03</span>
+          <h4>Доставка</h4>
+          <p>Инсталираме устройството на място или предаваме готовите рекламни материали.</p>
+        </div>
+        <div class="step">
+          <span class="num">04</span>
+          <h4>Поддръжка</h4>
+          <p>Следим сервизните срокове и презареждаме консумативите, преди да свършат.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="footer">
+  <div class="wrap cta-band">
+    <div>
+      <h2>Готови сме, когато и вие сте.</h2>
+      <p>Поръчайте тонер за устройство, което вече поддържаме, или заявете консултация за ново решение.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-solid" href="https://pro361.com/order-toners/">Поръчай тонер</a>
+      <a class="btn btn-ghost" href="https://pro361.com/contact/" style="border-color:rgba(239,234,224,.4);">Пишете ни</a>
+    </div>
+  </div>
+
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#top">
+        <span class="mark regmark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="7" fill="none" stroke="#00a8e8" stroke-width="1.4"/><circle cx="14" cy="13" r="7" fill="none" stroke="#e0007a" stroke-width="1.4"/></svg>
+        </span>
+        PROJECT 361
+      </a>
+      <p>Печатни решения и реклама — pro361.com. Продажба, наем и сервиз на копирна техника; печатна и сувенирна реклама.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Печатни решения</h5>
+      <ul>
+        <li><a href="https://pro361.com/product-category/%d0%bf%d1%80%d0%b8%d0%bd%d1%82%d0%b5%d1%80%d0%b8/">Принтери</a></li>
+        <li><a href="https://pro361.com/product-category/%d0%bc%d0%bd%d0%be%d0%b3%d0%be%d1%84%d1%83%d0%bd%d0%ba%d1%86%d0%b8%d0%be%d0%bd%d0%b0%d0%bb%d0%bd%d0%b8-%d1%83%d1%81%d1%82%d1%80%d0%be%d0%b9%d1%81%d1%82%d0%b2%d0%b0/">Многофункционални устройства</a></li>
+        <li><a href="https://pro361.com/product-category/%d1%83%d1%81%d1%82%d1%80%d0%be%d0%b9%d1%81%d1%82%d0%b2%d0%b0-%d0%bf%d0%be%d0%b4-%d0%bd%d0%b0%d0%b5%d0%bc/">Устройства под наем</a></li>
+        <li><a href="https://pro361.com/product-category/%d0%be%d0%b1%d0%bd%d0%be%d0%b2%d0%b5%d0%bd%d0%b8-%d1%83%d1%81%d1%82%d1%80%d0%be%d0%b9%d1%81%d1%82%d0%b2%d0%b0/">Обновени устройства</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Компания</h5>
+      <ul>
+        <li><a href="https://pro361.com/about-us/">За нас</a></li>
+        <li><a href="https://pro361.com/advertising/">Реклама</a></li>
+        <li><a href="https://pro361.com/news-blog/">Новини</a></li>
+        <li><a href="https://pro361.com/service/">Сервиз</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Последвайте ни</h5>
+      <ul>
+        <li><a href="https://www.facebook.com/pro361" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.tiktok.com/@project361.pro361" target="_blank" rel="noopener">TikTok</a></li>
+        <li><a href="https://pro361.com/privacy-policy/">Политика за поверителност</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap foot-bottom">
+    <span>© 2018–2026 PROJECT 361 (Pro361 LTD)</span>
+    <span>pro361.com</span>
+  </div>
+</footer>
+
+</body>
+</html>
